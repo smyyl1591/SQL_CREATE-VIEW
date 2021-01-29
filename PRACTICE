@@ -1,0 +1,69 @@
+
+--SQL NOTE--
+--[PK, FK IN CREATING, ALTERING, DELETING TABLE]--
+
+--CREATE VIEW 
+/*
+建立 high_price_stock View 檢視表儲存常用查詢敘述：
+查詢敘述為大於等於 200 股價的個股
+*/
+CREATE VIEW high_price_stock 
+AS 
+SELECT
+    id,
+    name,
+    price
+FROM
+    stocks
+WHERE price >= 200;
+
+/*
+可以直接從 View 檢視表中查詢資料進行進一步過濾，就不用重複撰寫查詢語法
+*/
+SELECT * FROM high_price_stock;
+
+/*
+丟掉VIEW 
+*/
+DROP VIEW high_price_stock;
+
+
+--CREATE TABLE 
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(PersonID)
+);
+
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL PRIMARY KEY,
+    OrderNumber int NOT NULL,
+    PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
+);
+
+
+
+--ALTER | DROP TABLE 
+--#1
+ALTER TABLE Orders
+ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+--#2
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+
+
